@@ -121,6 +121,7 @@ axios
 这段代码的主要修改点是新增了一个 `getProxyInfo` 函数，该函数自动读取系统的代理配置，在请求网络资源时使用该配置。
 
 **执行结果如下：**
+
 ![](1655640686936.png)
 
 
@@ -128,6 +129,7 @@ axios
 - https://zh.wikipedia.org/wiki/%E7%BD%91%E7%BB%9C%E4%BB%A3%E7%90%86%E8%87%AA%E5%8A%A8%E5%8F%91%E7%8E%B0%E5%8D%8F%E8%AE%AE
 - https://zh.wikipedia.org/wiki/%E4%BB%A3%E7%90%86%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE
 - https://cn.theastrologypage.com/web-proxy-autodiscovery-protocol
+- https://textslashplain.com/2020/07/14/web-proxy-auto-discovery/
 - https://web.archive.org/web/20210302043814/http://findproxyforurl.com/wpad-introduction/
 - https://xz.aliyun.com/t/1739/
 - https://blog.csdn.net/vevenlcf/article/details/80887753
