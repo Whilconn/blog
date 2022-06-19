@@ -1,4 +1,4 @@
-# 浏览器能自动使用代理，你知道吗？
+# 浏览器能自动使用代理？
 
 ## 背景
 以前我认为，只要开启代理，本地所有请求都会先经过代理再访问网络资源。直到这两天，用 `Node.js` 访问 `Google` 出现报错。
@@ -21,12 +21,15 @@ axios
 ```
 
 **执行结果如下：**
+
 ![](1655640870706.png)
 
 **此时我的 `Chrome` 却能正常访问 `Google`！**
+
 ![](1655549675525.png)
 
 **此时我的表情：**
+
 <div align="center"><img src="1655552134144.png" width="150px"></div>
 
 查阅资料后才发现其中的原因：浏览器会自动获取代理配置并使用，通常我们写的代码是直接访问网络资源而不会使用代理！
@@ -49,8 +52,8 @@ axios
 
 ## 代理设置的工作流程
 - 手动代理配置
-  - 用户手工配置代理的主机名和端口
-  - 软件根据手动代理配置，将 `HTTP` 请求转发到对应的主机端口
+  - 用户手工配置系统代理的主机名和端口
+  - 软件根据系统代理配置，将 `HTTP` 请求转发到对应的主机端口
 
 - PAC
   - 用户手工配置 `PAC` 的 `URL`
@@ -59,7 +62,7 @@ axios
 
 - WPAD
   - 如果系统设置中 `WPAD` 被启用，则通过 `DHCP` 或 `DNS` 查找 `PAC` 配置文件
-  - 系统找到 `PAC` 的 `URL` 之后，则下载该配置文件
+  - 系统找到 `PAC` 的 `URL` 之后下载该配置文件
   - 软件根据 `PAC` 文件配置对所有 `HTTP` 请求进行分发
 
 ## 实际示例
@@ -70,12 +73,12 @@ axios
 - **Auto Proxy Discovery** 对应 **WPAD**
 - 其他都可以认为是 **手动代理配置**
 
-我们更常用到的是手动代理配置，常见的代理软件和抓包软件启动之后都会自动配置 `Web Proxy`、`Secure Web Proxy` 以及 `SOCKS Proxy`，上图中 `Web Proxy` 的服务器和端口是 `127.0.0.1:7890`。接着打开浏览器访问 `https://www.google.com/` 时，请求会被转发到 `127.0.0.1:7890`，代理软件或抓包软件可能会对请求做一些处理然后再转发到公网。
+我们更常用到的是手动代理配置，常见的代理软件和抓包软件启动之后都会自动配置 `Web Proxy`、`Secure Web Proxy` 以及 `SOCKS Proxy`，上图中 `Web Proxy` 的服务器和端口是 `127.0.0.1:7890`。接着打开浏览器访问 `https://www.google.com/` 时，浏览器会先读取系统代理配置并在请求时使用该配置，发起的请求会被转发到 `127.0.0.1:7890`，代理软件或抓包软件会对请求做一些处理然后再转发到公网。
 
 手动代理配置一般只影响个人主机，而 `PAC` 和 `WPAD` 则可以用于范围更广的局域网代理或开放代理。
 
 > Tips：
-> - 1、代理软件和抓包软件同时开启时，其中一个可能无法正常工作，因为后启动的软件会覆盖之前的代理配置，可以通过设置转发解决
+> - 1、代理软件和抓包软件同时开启时，先启动的软件可能无法正常工作，因为后启动的软件会覆盖之前的代理配置，可以设置代理转发解决
 > - 2、浏览器可以禁用代理服务，使用以下命令行启动浏览器试试 `/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --no-proxy-server`
 
 ## 升级：自动使用代理
@@ -120,6 +123,7 @@ axios
 **执行结果如下：**
 ![](1655640686936.png)
 
+
 ## 参考
 - https://zh.wikipedia.org/wiki/%E7%BD%91%E7%BB%9C%E4%BB%A3%E7%90%86%E8%87%AA%E5%8A%A8%E5%8F%91%E7%8E%B0%E5%8D%8F%E8%AE%AE
 - https://zh.wikipedia.org/wiki/%E4%BB%A3%E7%90%86%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE
@@ -131,3 +135,4 @@ axios
 - https://web.archive.org/web/20060424005037/http://wp.netscape.com/eng/mozilla/2.0/relnotes/demo/proxy-live.html
 - https://web.archive.org/web/20160826134107/http://jdebp.eu/FGA/web-browser-auto-proxy-configuration.html
 - https://web.archive.org/web/20201210040800/http://www.findproxyforurl.com/
+- https://github.com/chromium/chromium/tree/main/net/proxy_resolution
